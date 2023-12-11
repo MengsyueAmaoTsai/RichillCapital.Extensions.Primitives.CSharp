@@ -1,3 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="../../Solution.Tests.props" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\RichillCapital.Extensions.Primitives.csproj" />
+  </ItemGroup>
 </Project>
