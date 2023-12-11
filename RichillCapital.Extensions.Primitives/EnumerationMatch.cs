@@ -20,4 +20,10 @@ public readonly struct EnumerationMatch<TEnum, TValue>
             action();
         }
     }
+
+    public EnumerationThen<TEnum, TValue> Match(IEnumeration enumeration)
+        => new(enumeration: _enumeration, isMatched: _enumeration.Equals(enumeration), _stopEvaluating);
+
+    public EnumerationThen<TEnum, TValue> Match(IEnumerable<IEnumeration> enumerations)
+        => new(enumeration: _enumeration, isMatched: enumerations.Contains(_enumeration), stopEvaluating: _stopEvaluating);
 }

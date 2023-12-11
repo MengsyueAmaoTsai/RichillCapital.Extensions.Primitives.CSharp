@@ -19,4 +19,55 @@ public sealed class EnumerationTests
         firstActionCalled.Should().BeTrue();
         defaultActionCalled.Should().BeFalse();
     }
+
+    [TestMethod]
+    public void Should_CallsDefaultAction_WhenNoConditionMatched()
+    {
+        var three = TestEnum.Three;
+        var firstActionCalled = false;
+        var secondActionCalled = false;
+        var defaultActionCalled = false;
+
+        three
+            .Match(TestEnum.One).Then(() => firstActionCalled = true)
+            .Match(TestEnum.Two).Then(() => secondActionCalled = true)
+            .Default(() => defaultActionCalled = true);
+
+        firstActionCalled.Should().BeFalse();
+        secondActionCalled.Should().BeFalse();
+        defaultActionCalled.Should().BeTrue();
+    }
+
+    [TestMethod]
+    public void Should_CallsFirstAction_WhenFirstConditionMatched()
+    {
+        var one = TestEnum.One;
+        var firstActionCalled = false;
+        var secondActionCalled = false;
+
+        one
+            .Match(TestEnum.One).Then(() => firstActionCalled = true)
+            .Match(TestEnum.Two).Then(() => secondActionCalled = true);
+
+        firstActionCalled.Should().BeTrue();
+        secondActionCalled.Should().BeFalse();
+    }
+
+    [TestMethod]
+    public void Should()
+    {
+        var three = TestEnum.Three;
+        var firstActionCalled = false;
+        var secondActionCalled = false;
+        var thirdActionCalled = false;
+
+        three
+            .Match(TestEnum.One).Then(() => firstActionCalled = true)
+            .Match(TestEnum.Two).Then(() => secondActionCalled = true)
+            .Match(new List<TestEnum> { TestEnum.One, TestEnum.Two, TestEnum.Three }).Then(() => thirdActionCalled = true);
+
+        firstActionCalled.Should().BeFalse();
+        secondActionCalled.Should().BeFalse();
+        thirdActionCalled.Should().BeTrue();
+    }
 }
