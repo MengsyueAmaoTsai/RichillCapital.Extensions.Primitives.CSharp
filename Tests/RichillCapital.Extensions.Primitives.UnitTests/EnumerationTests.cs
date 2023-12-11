@@ -88,4 +88,19 @@ public sealed class EnumerationTests
         secondActionCalled.Should().BeFalse();
         thirdActionCalled.Should().BeTrue();
     }
+
+    [TestMethod]
+    public void Should_CallsSecondAction_WhenSecondConditionMatched()
+    {
+        var two = TestEnum.Two;
+        var firstActionCalled = false;
+        var secondActionCalled = false;
+
+        two
+            .Match(TestEnum.One).Then(() => firstActionCalled = true)
+            .Match(TestEnum.Two).Then(() => secondActionCalled = true);
+
+        firstActionCalled.Should().BeFalse();
+        secondActionCalled.Should().BeTrue();
+    }
 }
