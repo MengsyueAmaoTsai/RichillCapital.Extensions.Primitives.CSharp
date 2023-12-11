@@ -1,5 +1,9 @@
 # RichillCapital.Extensions.Primitives
 
+## Pack
+```powershell
+dotnet pack -o ./dist
+```
 
 ## Test
 ```powershell

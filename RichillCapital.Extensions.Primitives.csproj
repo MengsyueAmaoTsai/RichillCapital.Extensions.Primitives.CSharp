@@ -8,10 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="coverage\**" />
+    <Compile Remove="dist\**" />
     <Compile Remove="Tests\**" />
     <EmbeddedResource Remove="coverage\**" />
+    <EmbeddedResource Remove="dist\**" />
     <EmbeddedResource Remove="Tests\**" />
     <None Remove="coverage\**" />
+    <None Remove="dist\**" />
     <None Remove="Tests\**" />
   </ItemGroup>
 
