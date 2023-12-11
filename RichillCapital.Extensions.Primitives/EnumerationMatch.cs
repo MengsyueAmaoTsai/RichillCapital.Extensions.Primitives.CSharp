@@ -26,4 +26,7 @@ public readonly struct EnumerationMatch<TEnum, TValue>
 
     public EnumerationThen<TEnum, TValue> Match(IEnumerable<IEnumeration> enumerations)
         => new(enumeration: _enumeration, isMatched: enumerations.Contains(_enumeration), stopEvaluating: _stopEvaluating);
+
+    public EnumerationThen<TEnum, TValue> Match(params IEnumeration[] enumerations)
+        => new(enumeration: _enumeration, isMatched: enumerations.Contains(_enumeration), stopEvaluating: _stopEvaluating);
 }

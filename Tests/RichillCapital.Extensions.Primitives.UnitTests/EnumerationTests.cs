@@ -54,7 +54,7 @@ public sealed class EnumerationTests
     }
 
     [TestMethod]
-    public void Should()
+    public void Should_CalledAction_WhenMatchesLastList()
     {
         var three = TestEnum.Three;
         var firstActionCalled = false;
@@ -65,6 +65,24 @@ public sealed class EnumerationTests
             .Match(TestEnum.One).Then(() => firstActionCalled = true)
             .Match(TestEnum.Two).Then(() => secondActionCalled = true)
             .Match(new List<TestEnum> { TestEnum.One, TestEnum.Two, TestEnum.Three }).Then(() => thirdActionCalled = true);
+
+        firstActionCalled.Should().BeFalse();
+        secondActionCalled.Should().BeFalse();
+        thirdActionCalled.Should().BeTrue();
+    }
+
+    [TestMethod]
+    public void Should_CallsAction_WhenMatchesLastParameter()
+    {
+        var three = TestEnum.Three;
+        var firstActionCalled = false;
+        var secondActionCalled = false;
+        var thirdActionCalled = false;
+
+        three
+            .Match(TestEnum.One).Then(() => firstActionCalled = true)
+            .Match(TestEnum.Two).Then(() => secondActionCalled = true)
+            .Match(TestEnum.One, TestEnum.Two, TestEnum.Three).Then(() => thirdActionCalled = true);
 
         firstActionCalled.Should().BeFalse();
         secondActionCalled.Should().BeFalse();
