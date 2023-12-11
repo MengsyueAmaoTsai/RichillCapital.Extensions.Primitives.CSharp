@@ -18,7 +18,7 @@
 
   <PropertyGroup>
       <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-      <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)Core.ruleset</CodeAnalysisRuleSet>
+      <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)Solution.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>    
   
   <ItemGroup Condition="Exists('$(MSBuildThisFileDirectory).editorconfig')" >

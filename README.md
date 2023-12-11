@@ -1,4 +1,4 @@
-# RichillCapital.Core
+# RichillCapital.Extensions.Primitives
 
 
 ## Test
