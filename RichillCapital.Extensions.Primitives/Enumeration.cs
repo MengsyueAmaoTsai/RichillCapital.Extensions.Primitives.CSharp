@@ -59,14 +59,14 @@ public abstract class Enumeration<TEnum, TValue> :
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public int CompareTo(Enumeration<TEnum, TValue>? other)
-    {
-        if (other is null)
-        {
-            return 0;
-        }
+        => other is null ? 0 : Value.CompareTo(other.Value);
 
-        return Value.CompareTo(other.Value);
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static implicit operator TValue(Enumeration<TEnum, TValue> enumeration)
+        => enumeration is not null ? enumeration.Value : default!;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static explicit operator Enumeration<TEnum, TValue>(TValue value) => FromValue(value);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool operator <(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
@@ -84,6 +84,7 @@ public abstract class Enumeration<TEnum, TValue> :
     public static bool operator >=(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
         => left.CompareTo(right) >= 0;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override int GetHashCode() => Value.GetHashCode();
 
     public override bool Equals(object? obj) => (obj is Enumeration<TEnum, TValue> other) && Equals(other);
@@ -120,6 +121,7 @@ public abstract class Enumeration<TEnum, TValue> :
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool TryFromName(string name, out TEnum? enumeration)
         => TryFromName(name, false, out enumeration);
 
@@ -153,7 +155,7 @@ public abstract class Enumeration<TEnum, TValue> :
 
             if (enumeration is null)
             {
-                throw new EnumerationNotFoundException($"");
+                throw new EnumerationNotFoundException($"No {typeof(TEnum).Name} with Value {value} found.");
             }
         }
 
