@@ -1,21 +1,48 @@
+using System.Reflection;
+using System.Runtime.CompilerServices;
+
 namespace RichillCapital.Extensions.Primitives;
 
 public abstract class Enumeration<TEnum> : Enumeration<TEnum, int>
     where TEnum : Enumeration<TEnum, int>
 {
-    protected Enumeration(string name, int value) 
+    protected Enumeration(string name, int value)
         : base(name, value)
     {
     }
 }
 
-public abstract class Enumeration<TEnum, TValue> : 
-    IEnumeration, 
-    IEquatable<Enumeration<TEnum, TValue>>, 
+public abstract class Enumeration<TEnum, TValue> :
+    IEnumeration,
+    IEquatable<Enumeration<TEnum, TValue>>,
     IComparable<Enumeration<TEnum, TValue>>
     where TEnum : Enumeration<TEnum, TValue>
     where TValue : IEquatable<TValue>, IComparable<TValue>
 {
+
+    private static readonly Lazy<TEnum[]> _enumOptions = new(GetAllOptions, LazyThreadSafetyMode.ExecutionAndPublication);
+
+    private static readonly Lazy<Dictionary<string, TEnum>> _fromName = new(() =>
+        _enumOptions.Value.ToDictionary(item => item.Name));
+
+    private static readonly Lazy<Dictionary<string, TEnum>> _fromNameIgnoreCase = new(() =>
+        _enumOptions.Value.ToDictionary(item => item.Name, StringComparer.OrdinalIgnoreCase));
+
+    private static TEnum[] GetAllOptions()
+    {
+        var baseType = typeof(TEnum);
+        var assembly = Assembly.GetAssembly(baseType) ?? throw new InvalidOperationException();
+
+        return assembly.GetTypes()
+            .Where(baseType.IsAssignableFrom)
+            .SelectMany(type => type.GetFields()
+                .Where(field => type.IsAssignableFrom(field.FieldType))
+                .Select(field => (TEnum)field.GetValue(null)!)
+                .ToList())
+            .OrderBy(enumeration => enumeration.Name)
+            .ToArray();
+    }
+
     protected Enumeration(string name, TValue value)
     {
         Name = name;
@@ -41,7 +68,7 @@ public abstract class Enumeration<TEnum, TValue> :
 
         if (other is null)
         {
-            return false; 
+            return false;
         }
 
         return Value.Equals(other.Value);
@@ -49,4 +76,21 @@ public abstract class Enumeration<TEnum, TValue> :
 
     public EnumerationThen<TEnum, TValue> Match(Enumeration<TEnum, TValue> enumerationMatch)
         => new(enumeration: this, isMatched: Equals(enumerationMatch), stopEvaluating: false);
+
+    public static TEnum FromName(string name, bool ignoreCase = false)
+    {
+        throw new NotImplementedException();
+
+        TEnum FindByName(Dictionary<string, TEnum> dictionary)
+        {
+            dictionary.TryGetValue(name, out var result);
+
+            return result;
+        }
+    }
+
+    public static TEnum FromValue(TValue value)
+    {
+        throw new NotImplementedException();
+    }
 }
