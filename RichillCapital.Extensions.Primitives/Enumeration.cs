@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 using Primitives.RichillCapital.Extensions.Primitives;
 
@@ -56,12 +57,34 @@ public abstract class Enumeration<TEnum, TValue> :
     public string Name { get; private init; }
     public TValue Value { get; private init; }
 
-    public override int GetHashCode() => Value.GetHashCode();
-
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public int CompareTo(Enumeration<TEnum, TValue>? other)
     {
-        throw new NotImplementedException();
+        if (other is null)
+        {
+            return 0;
+        }
+
+        return Value.CompareTo(other.Value);
     }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator <(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
+        => left.CompareTo(right) < 0;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator <=(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
+        => left.CompareTo(right) <= 0;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator >(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
+        => left.CompareTo(right) > 0;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator >=(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
+        => left.CompareTo(right) >= 0;
+
+    public override int GetHashCode() => Value.GetHashCode();
 
     public override bool Equals(object? obj) => (obj is Enumeration<TEnum, TValue> other) && Equals(other);
 
