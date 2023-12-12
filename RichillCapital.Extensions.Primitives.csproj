@@ -2,7 +2,8 @@
   <Import Project="./Solution.Build.props"/>
 
   <PropertyGroup>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageId>RichillCapital.Extensions.Primitives</PackageId>
+    <Version>1.0.1</Version>
   </PropertyGroup>
   
   <ItemGroup>

@@ -7,6 +7,7 @@ dotnet pack -o ./dist -c Release
 ```
 
 ```powershell
+dotnet nuget push .\dist\RichillCapital.Extensions.Primitives.1.0.0.nupkg -k <api-key> -s https://api.nuget.org/v3/index.json
 ```
 
 ## Test
