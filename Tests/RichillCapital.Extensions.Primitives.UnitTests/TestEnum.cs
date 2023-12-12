@@ -1,6 +1,6 @@
 namespace RichillCapital.Extensions.Primitives.UnitTests;
 
-internal sealed class TestEnum : Enumeration<TestEnum>
+public sealed class TestEnum : Enumeration<TestEnum>
 {
     public static readonly TestEnum One = new(nameof(One), 0);
     public static readonly TestEnum Two = new(nameof(Two), 1);
