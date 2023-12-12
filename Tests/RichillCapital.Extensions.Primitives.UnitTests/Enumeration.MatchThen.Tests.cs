@@ -3,7 +3,7 @@ using FluentAssertions;
 namespace RichillCapital.Extensions.Primitives.UnitTests;
 
 [TestClass]
-public sealed class EnumerationWhenThenTests
+public sealed class EnumerationMatchThenTests
 {
     [TestMethod]
     public void Should_NotCallsDefaultAction_WhenAnyConditionMatched()
