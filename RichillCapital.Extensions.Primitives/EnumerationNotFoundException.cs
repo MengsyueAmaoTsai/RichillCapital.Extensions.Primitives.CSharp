@@ -6,4 +6,13 @@ public sealed class EnumerationNotFoundException : Exception
         : base(message)
     {
     }
+
+    public EnumerationNotFoundException()
+    {
+    }
+
+    public EnumerationNotFoundException(string message, Exception innerException)
+        : base(message, innerException)
+    {
+    }
 }

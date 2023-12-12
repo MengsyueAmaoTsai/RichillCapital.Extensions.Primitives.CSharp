@@ -32,7 +32,7 @@ public abstract class Enumeration<TEnum, TValue> :
     private static readonly Lazy<Dictionary<string, TEnum>> _fromNameIgnoreCase =
         new(() => _enumOptions.Value.ToDictionary(item => item.Name, StringComparer.OrdinalIgnoreCase));
 
-    static readonly Lazy<Dictionary<TValue, TEnum>> _fromValue =
+    private static readonly Lazy<Dictionary<TValue, TEnum>> _fromValue =
         new(() =>
         {
             var dictionary = new Dictionary<TValue, TEnum>(GetValueComparer());
@@ -55,51 +55,8 @@ public abstract class Enumeration<TEnum, TValue> :
     }
 
     public string Name { get; private init; }
+
     public TValue Value { get; private init; }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public int CompareTo(Enumeration<TEnum, TValue>? other)
-        => other is null ? 0 : Value.CompareTo(other.Value);
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static implicit operator TValue(Enumeration<TEnum, TValue> enumeration)
-        => enumeration is not null ? enumeration.Value : default!;
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static explicit operator Enumeration<TEnum, TValue>(TValue value) => FromValue(value);
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator <(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
-        => left.CompareTo(right) < 0;
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator <=(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
-        => left.CompareTo(right) <= 0;
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator >(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
-        => left.CompareTo(right) > 0;
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator >=(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
-        => left.CompareTo(right) >= 0;
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override int GetHashCode() => Value.GetHashCode();
-
-    public override bool Equals(object? obj) => (obj is Enumeration<TEnum, TValue> other) && Equals(other);
-
-    public bool Equals(Enumeration<TEnum, TValue>? other)
-        => other is not null && (ReferenceEquals(this, other) || Value.Equals(other.Value));
-
-    public EnumerationThen<TEnum, TValue> Match(Enumeration<TEnum, TValue> enumeration)
-        => new(enumeration: this, isMatched: Equals(enumeration), stopEvaluating: false);
-
-    public EnumerationThen<TEnum, TValue> Match(params Enumeration<TEnum, TValue>[] enumerations) =>
-             new(enumeration: this, isMatched: enumerations.Contains(this), stopEvaluating: false);
-
-    public EnumerationThen<TEnum, TValue> Match(IEnumerable<Enumeration<TEnum, TValue>> enumerations) =>
-        new(enumeration: this, isMatched: enumerations.Contains(this), stopEvaluating: false);
 
     public static TEnum FromName(string name, bool ignoreCase = false)
     {
@@ -166,7 +123,7 @@ public abstract class Enumeration<TEnum, TValue> :
     {
         if (value is null)
         {
-            throw new ArgumentNullException();
+            throw new ArgumentNullException(string.Empty);
         }
 
         if (!_fromValue.Value.TryGetValue(value, out var result))
@@ -181,6 +138,57 @@ public abstract class Enumeration<TEnum, TValue> :
     {
         throw new NotImplementedException();
     }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public int CompareTo(Enumeration<TEnum, TValue>? other)
+        => other is null ? 0 : Value.CompareTo(other.Value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static implicit operator TValue(Enumeration<TEnum, TValue> enumeration)
+        => enumeration is not null ? enumeration.Value : default!;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static explicit operator Enumeration<TEnum, TValue>(TValue value) => FromValue(value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator <(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
+        => left.CompareTo(right) < 0;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator <=(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
+        => left.CompareTo(right) <= 0;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator >(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
+        => left.CompareTo(right) > 0;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator >=(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
+        => left.CompareTo(right) >= 0;
+
+    public static bool operator ==(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
+        => left is null ? right is null : left.Equals(right);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator !=(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
+        => !(left == right);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override int GetHashCode() => Value.GetHashCode();
+
+    public override bool Equals(object? obj) => (obj is Enumeration<TEnum, TValue> other) && Equals(other);
+
+    public bool Equals(Enumeration<TEnum, TValue>? other)
+        => other is not null && (ReferenceEquals(this, other) || Value.Equals(other.Value));
+
+    public EnumerationThen<TEnum, TValue> Match(Enumeration<TEnum, TValue> enumeration)
+        => new(enumeration: this, isMatched: Equals(enumeration), stopEvaluating: false);
+
+    public EnumerationThen<TEnum, TValue> Match(params Enumeration<TEnum, TValue>[] enumerations) =>
+             new(enumeration: this, isMatched: enumerations.Contains(this), stopEvaluating: false);
+
+    public EnumerationThen<TEnum, TValue> Match(IEnumerable<Enumeration<TEnum, TValue>> enumerations) =>
+        new(enumeration: this, isMatched: enumerations.Contains(this), stopEvaluating: false);
 
     public override string ToString() => Name;
 

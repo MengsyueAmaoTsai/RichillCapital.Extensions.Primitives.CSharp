@@ -1,3 +1,5 @@
 ﻿namespace RichillCapital.Extensions.Primitives;
 
-public interface IEnumeration;
+public interface IEnumeration
+{
+}

@@ -9,14 +9,14 @@ public class EnumerationComparerAttribute<T> : Attribute
     public IEqualityComparer<T> Comparer { get; private init; }
 }
 
-public class EnumerationStringComparerAttribute : EnumerationComparerAttribute<string>
+public sealed class EnumerationStringComparerAttribute : EnumerationComparerAttribute<string>
 {
     public EnumerationStringComparerAttribute(StringComparison comparison)
         : base(GetComparer(comparison))
     {
     }
 
-    private static IEqualityComparer<string> GetComparer(StringComparison comparison)
+    private static StringComparer GetComparer(StringComparison comparison)
     {
         return comparison switch
         {
@@ -29,4 +29,6 @@ public class EnumerationStringComparerAttribute : EnumerationComparerAttribute<s
             _ => throw new ArgumentException($"StringComparison {comparison} is not supported", nameof(comparison)),
         };
     }
+
+    public StringComparison Comparison { get; }
 }
