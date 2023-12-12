@@ -37,7 +37,7 @@ public abstract class Enumeration<TEnum, TValue> :
 
         return assembly.GetTypes()
             .Where(baseType.IsAssignableFrom)
-            .SelectMany(type => type.GetFields()
+            .SelectMany(type => type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
                 .Where(field => type.IsAssignableFrom(field.FieldType))
                 .Select(field => (TEnum)field.GetValue(null)!)
                 .ToList())
