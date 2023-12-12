@@ -40,7 +40,7 @@ public abstract class Enumeration<TEnum, TValue> :
     public string Name { get; private init; }
     public TValue Value { get; private init; }
 
-    public override int GetHashCode() => base.GetHashCode();
+    public override int GetHashCode() => Value.GetHashCode();
 
     public int CompareTo(Enumeration<TEnum, TValue>? other)
     {
@@ -54,6 +54,12 @@ public abstract class Enumeration<TEnum, TValue> :
 
     public EnumerationThen<TEnum, TValue> Match(Enumeration<TEnum, TValue> enumeration)
         => new(enumeration: this, isMatched: Equals(enumeration), stopEvaluating: false);
+
+    public EnumerationThen<TEnum, TValue> Match(params Enumeration<TEnum, TValue>[] enumerations) =>
+             new(enumeration: this, isMatched: enumerations.Contains(this), stopEvaluating: false);
+
+    public EnumerationThen<TEnum, TValue> Match(IEnumerable<Enumeration<TEnum, TValue>> enumerations) =>
+        new(enumeration: this, isMatched: enumerations.Contains(this), stopEvaluating: false);
 
     public static TEnum FromName(string name, bool ignoreCase = false)
     {
