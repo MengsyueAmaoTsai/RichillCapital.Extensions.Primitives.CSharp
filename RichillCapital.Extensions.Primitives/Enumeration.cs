@@ -119,4 +119,11 @@ public abstract class Enumeration<TEnum, TValue> :
     {
         throw new NotImplementedException();
     }
+
+    public static bool TryFromValue(TValue value, out TEnum enumeration)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override string ToString() => Name;
 }
