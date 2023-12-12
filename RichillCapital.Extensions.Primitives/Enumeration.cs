@@ -31,6 +31,22 @@ public abstract class Enumeration<TEnum, TValue> :
     private static readonly Lazy<Dictionary<string, TEnum>> _fromNameIgnoreCase =
         new(() => _enumOptions.Value.ToDictionary(item => item.Name, StringComparer.OrdinalIgnoreCase));
 
+    static readonly Lazy<Dictionary<TValue, TEnum>> _fromValue =
+        new(() =>
+        {
+            var dictionary = new Dictionary<TValue, TEnum>(GetValueComparer());
+
+            foreach (var item in _enumOptions.Value)
+            {
+                if (item.Value != null && !dictionary.ContainsKey(item.Value))
+                {
+                    dictionary.Add(item.Value, item);
+                }
+            }
+
+            return dictionary;
+        });
+
     protected Enumeration(string name, TValue value)
     {
         Name = name;
@@ -99,7 +115,41 @@ public abstract class Enumeration<TEnum, TValue> :
 
     public static TEnum FromValue(TValue value)
     {
-        throw new NotImplementedException();
+        TEnum? enumeration;
+
+        if (value is not null)
+        {
+            if (!_fromValue.Value.TryGetValue(value, out enumeration))
+            {
+                throw new EnumerationNotFoundException($"No {typeof(TEnum).Name} with Value {value} found.");
+            }
+        }
+        else
+        {
+            enumeration = _enumOptions.Value.FirstOrDefault(x => x.Value is null);
+
+            if (enumeration is null)
+            {
+                throw new EnumerationNotFoundException($"");
+            }
+        }
+
+        return enumeration;
+    }
+
+    public static TEnum FromValue(TValue value, TEnum defaultEnumeration)
+    {
+        if (value is null)
+        {
+            throw new ArgumentNullException();
+        }
+
+        if (!_fromValue.Value.TryGetValue(value, out var result))
+        {
+            return defaultEnumeration;
+        }
+
+        return result;
     }
 
     public static bool TryFromValue(TValue value, out TEnum enumeration)
@@ -122,5 +172,12 @@ public abstract class Enumeration<TEnum, TValue> :
                 .ToList())
             .OrderBy(enumeration => enumeration.Name)
             .ToArray();
+    }
+
+    private static IEqualityComparer<TValue>? GetValueComparer()
+    {
+        var comparer = typeof(TEnum).GetCustomAttribute<EnumerationComparerAttribute<TValue>>();
+
+        return comparer?.Comparer;
     }
 }
