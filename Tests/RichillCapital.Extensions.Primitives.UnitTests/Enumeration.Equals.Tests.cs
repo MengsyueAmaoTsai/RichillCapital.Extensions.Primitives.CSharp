@@ -16,15 +16,15 @@ public sealed class EnumerationEqualsTests
     public static IEnumerable<object[]> EqualsObjectData =>
         new List<object[]>
         {
-            new object[] { TestEnum.One, null!, false },
-            new object[] { TestEnum.One, TestEnum.One, true },
-            new object[] { TestEnum.One, TestEnum2.One, false },
-            new object[] { TestEnum.One, TestEnum.Two, false },
+            new object[] { TestEnumeration.One, null!, false },
+            new object[] { TestEnumeration.One, TestEnumeration.One, true },
+            new object[] { TestEnumeration.One, TestEnum2.One, false },
+            new object[] { TestEnumeration.One, TestEnumeration.Two, false },
         };
 
     [DataTestMethod]
     [DynamicData(nameof(EqualsObjectData))]
-    public void EqualsObjectReturnsExpected(TestEnum left, object right, bool expected)
+    public void EqualsObjectReturnsExpected(TestEnumeration left, object right, bool expected)
     {
         var result = left.Equals(right);
 
@@ -34,14 +34,14 @@ public sealed class EnumerationEqualsTests
     public static IEnumerable<object[]> EqualsEnumerationData =>
         new List<object[]>
         {
-            new object[] { TestEnum.One, null!, false },
-            new object[] { TestEnum.One, TestEnum.One, true },
-            new object[] { TestEnum.One, TestEnum.Two, false },
+            new object[] { TestEnumeration.One, null!, false },
+            new object[] { TestEnumeration.One, TestEnumeration.One, true },
+            new object[] { TestEnumeration.One, TestEnumeration.Two, false },
         };
 
     [DataTestMethod]
     [DynamicData(nameof(EqualsEnumerationData))]
-    public void EqualsEnumerationReturnsExpected(TestEnum left, object right, bool expected)
+    public void EqualsEnumerationReturnsExpected(TestEnumeration left, object right, bool expected)
     {
         var result = left.Equals(right);
 
@@ -52,15 +52,15 @@ public sealed class EnumerationEqualsTests
         new List<object[]>
         {
             new object[] { null!, null!, true },
-            new object[] { null!, TestEnum.One, false },
-            new object[] { TestEnum.One, null!, false },
-            new object[] { TestEnum.One, TestEnum.One, true },
-            new object[] { TestEnum.One, TestEnum.Two, false },
+            new object[] { null!, TestEnumeration.One, false },
+            new object[] { TestEnumeration.One, null!, false },
+            new object[] { TestEnumeration.One, TestEnumeration.One, true },
+            new object[] { TestEnumeration.One, TestEnumeration.Two, false },
         };
 
     [DataTestMethod]
     [DynamicData(nameof(EqualOperatorData))]
-    public void EqualOperatorReturnsExpected(TestEnum left, TestEnum right, bool expected)
+    public void EqualOperatorReturnsExpected(TestEnumeration left, TestEnumeration right, bool expected)
     {
         var result = left == right;
 
@@ -69,7 +69,7 @@ public sealed class EnumerationEqualsTests
 
     [DataTestMethod]
     [DynamicData(nameof(EqualOperatorData))]
-    public void NotEqualOperatorReturnsExpected(TestEnum left, TestEnum right, bool expected)
+    public void NotEqualOperatorReturnsExpected(TestEnumeration left, TestEnumeration right, bool expected)
     {
         var result = left != right;
 

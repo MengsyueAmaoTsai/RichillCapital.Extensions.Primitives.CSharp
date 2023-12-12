@@ -8,8 +8,8 @@ public sealed class EnumerationMembersTests
     [TestMethod]
     public void Should_ReturnsAllDefinedEnumerations()
     {
-        var result = TestEnum.Members;
+        var result = TestEnumeration.Members;
 
-        result.Should().BeEquivalentTo([TestEnum.One, TestEnum.Two, TestEnum.Three]);
+        result.Should().BeEquivalentTo([TestEnumeration.One, TestEnumeration.Two, TestEnumeration.Three]);
     }
 }

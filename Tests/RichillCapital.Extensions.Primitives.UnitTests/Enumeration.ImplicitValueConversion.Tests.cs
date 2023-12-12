@@ -6,7 +6,7 @@ public sealed class EnumerationImplicitValueConversionTests
     [TestMethod]
     public void ReturnsValueOfGivenEnum()
     {
-        var enumeration = TestEnum.One;
+        var enumeration = TestEnumeration.One;
 
         int result = enumeration;
 

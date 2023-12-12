@@ -3,7 +3,7 @@ using Primitives.RichillCapital.Extensions.Primitives;
 namespace RichillCapital.Extensions.Primitives.UnitTests;
 
 [TestClass]
-public class SmartEnumComparerAttributeTests
+public class EnumerationComparerAttributeTests
 {
     internal class VanillaStringEnum : Enumeration<VanillaStringEnum, string>
     {
@@ -31,7 +31,10 @@ public class SmartEnumComparerAttributeTests
     [EnumerationStringComparer(StringComparison.InvariantCulture)]
     internal class CaseSensitiveEnum : Enumeration<CaseSensitiveEnum, string>
     {
-        protected CaseSensitiveEnum(string name, string value) : base(name, value) { }
+        protected CaseSensitiveEnum(string name, string value)
+            : base(name, value)
+        {
+        }
 
         public static readonly CaseSensitiveEnum One = new("One", "one");
         public static readonly CaseSensitiveEnum Two = new("Two", "two");

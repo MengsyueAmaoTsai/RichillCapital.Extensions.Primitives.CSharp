@@ -8,9 +8,9 @@ public sealed class EnumerationExplicitConversionTests
     {
         int value = 1;
 
-        var result = (TestEnum)value;
+        var result = (TestEnumeration)value;
 
-        result.Should().BeSameAs(TestEnum.Two);
+        result.Should().BeSameAs(TestEnumeration.Two);
     }
 
     [TestMethod]
@@ -18,9 +18,9 @@ public sealed class EnumerationExplicitConversionTests
     {
         int? value = 1;
 
-        var result = (TestEnum)value;
+        var result = (TestEnumeration)value;
 
-        result.Should().BeSameAs(TestEnum.Two);
+        result.Should().BeSameAs(TestEnumeration.Two);
     }
 
     [TestMethod]
@@ -28,7 +28,7 @@ public sealed class EnumerationExplicitConversionTests
     {
         int? value = null;
 
-        var result = (TestEnum?)value;
+        var result = (TestEnumeration?)value;
 
         result.Should().BeNull();
     }

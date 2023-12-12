@@ -6,51 +6,51 @@ public sealed class EnumerationCompareToTests
     [TestMethod]
     public void CompareToReturnsExpected()
     {
-        TestCompareTo(TestEnum.Two, TestEnum.One, 1);
-        TestCompareTo(TestEnum.Two, TestEnum.Two, 0);
-        TestCompareTo(TestEnum.Two, TestEnum.Three, -1);
+        TestCompareTo(TestEnumeration.Two, TestEnumeration.One, 1);
+        TestCompareTo(TestEnumeration.Two, TestEnumeration.Two, 0);
+        TestCompareTo(TestEnumeration.Two, TestEnumeration.Three, -1);
     }
 
     [TestMethod]
     public void LessThanReturnsExpected()
     {
-        TestComparisonOperators(TestEnum.Two, TestEnum.One, false, false, true);
-        TestComparisonOperators(TestEnum.Two, TestEnum.Two, false, true, false);
-        TestComparisonOperators(TestEnum.Two, TestEnum.Three, true, false, false);
+        TestComparisonOperators(TestEnumeration.Two, TestEnumeration.One, false, false, true);
+        TestComparisonOperators(TestEnumeration.Two, TestEnumeration.Two, false, true, false);
+        TestComparisonOperators(TestEnumeration.Two, TestEnumeration.Three, true, false, false);
     }
 
     [TestMethod]
     public void LessThanOrEqualReturnsExpected()
     {
-        TestComparisonOperators(TestEnum.Two, TestEnum.One, false, false, true);
-        TestComparisonOperators(TestEnum.Two, TestEnum.Two, false, true, false);
-        TestComparisonOperators(TestEnum.Two, TestEnum.Three, true, false, false);
+        TestComparisonOperators(TestEnumeration.Two, TestEnumeration.One, false, false, true);
+        TestComparisonOperators(TestEnumeration.Two, TestEnumeration.Two, false, true, false);
+        TestComparisonOperators(TestEnumeration.Two, TestEnumeration.Three, true, false, false);
     }
 
     [TestMethod]
     public void GreaterThanReturnsExpected()
     {
-        TestComparisonOperators(TestEnum.Two, TestEnum.One, false, false, true);
-        TestComparisonOperators(TestEnum.Two, TestEnum.Two, false, true, false);
-        TestComparisonOperators(TestEnum.Two, TestEnum.Three, true, false, false);
+        TestComparisonOperators(TestEnumeration.Two, TestEnumeration.One, false, false, true);
+        TestComparisonOperators(TestEnumeration.Two, TestEnumeration.Two, false, true, false);
+        TestComparisonOperators(TestEnumeration.Two, TestEnumeration.Three, true, false, false);
     }
 
     [TestMethod]
     public void GreaterThanOrEqualReturnsExpected()
     {
-        TestComparisonOperators(TestEnum.Two, TestEnum.One, false, false, true);
-        TestComparisonOperators(TestEnum.Two, TestEnum.Two, false, true, false);
-        TestComparisonOperators(TestEnum.Two, TestEnum.Three, true, false, false);
+        TestComparisonOperators(TestEnumeration.Two, TestEnumeration.One, false, false, true);
+        TestComparisonOperators(TestEnumeration.Two, TestEnumeration.Two, false, true, false);
+        TestComparisonOperators(TestEnumeration.Two, TestEnumeration.Three, true, false, false);
     }
 
-    private static void TestCompareTo(TestEnum left, TestEnum right, int expected)
+    private static void TestCompareTo(TestEnumeration left, TestEnumeration right, int expected)
     {
         var result = left.CompareTo(right);
 
         result.Should().Be(expected);
     }
 
-    private static void TestComparisonOperators(TestEnum left, TestEnum right, bool lessThan, bool equalTo, bool greaterThan)
+    private static void TestComparisonOperators(TestEnumeration left, TestEnumeration right, bool lessThan, bool equalTo, bool greaterThan)
     {
         var lessThanResult = left < right;
         var lessThanOrEqualResult = left <= right;

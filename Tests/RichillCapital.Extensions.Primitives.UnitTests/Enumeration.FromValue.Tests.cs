@@ -8,17 +8,17 @@ public sealed class EnumerationFromValueTests
     [TestMethod]
     public void ReturnsEnumGivenMatchingValue()
     {
-        var result = TestEnum.FromValue(0);
+        var result = TestEnumeration.FromValue(0);
 
-        result.Should().BeSameAs(TestEnum.One);
+        result.Should().BeSameAs(TestEnumeration.One);
     }
 
     [TestMethod]
     public void Should_ThrowsException_GivenNonMatchingValue()
     {
         var nonMatchingValue = -1;
-        string errorMessage = $"No {typeof(TestEnum).Name} with Value {nonMatchingValue} found.";
-        var action = () => TestEnum.FromValue(nonMatchingValue);
+        string errorMessage = $"No {typeof(TestEnumeration).Name} with Value {nonMatchingValue} found.";
+        var action = () => TestEnumeration.FromValue(nonMatchingValue);
 
         action.Should()
             .ThrowExactly<EnumerationNotFoundException>()
@@ -29,9 +29,9 @@ public sealed class EnumerationFromValueTests
     public void Should_ReturnsDefaultEnum_WhenGivenNonMatchingValue()
     {
         var value = -1;
-        var defaultEnum = TestEnum.One;
+        var defaultEnum = TestEnumeration.One;
 
-        var result = TestEnum.FromValue(value, defaultEnum);
+        var result = TestEnumeration.FromValue(value, defaultEnum);
 
         result.Should().BeSameAs(defaultEnum);
     }
