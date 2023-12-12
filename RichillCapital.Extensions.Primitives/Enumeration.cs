@@ -1,6 +1,8 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
+using Primitives.RichillCapital.Extensions.Primitives;
+
 namespace RichillCapital.Extensions.Primitives;
 
 public abstract class Enumeration<TEnum> : Enumeration<TEnum, int>
@@ -74,16 +76,31 @@ public abstract class Enumeration<TEnum, TValue> :
         return Value.Equals(other.Value);
     }
 
-    public EnumerationThen<TEnum, TValue> Match(Enumeration<TEnum, TValue> enumerationMatch)
-        => new(enumeration: this, isMatched: Equals(enumerationMatch), stopEvaluating: false);
+    public EnumerationThen<TEnum, TValue> Match(Enumeration<TEnum, TValue> enumeration)
+        => new(enumeration: this, isMatched: Equals(enumeration), stopEvaluating: false);
 
     public static TEnum FromName(string name, bool ignoreCase = false)
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            throw new ArgumentException($"Argument cannot be null or empty.", nameof(name));
+        }
+
+        if (ignoreCase)
+        {
+            return FindByName(_fromNameIgnoreCase.Value);
+        }
+        else
+        {
+            return FindByName(_fromName.Value);
+        }
 
         TEnum FindByName(Dictionary<string, TEnum> dictionary)
         {
-            dictionary.TryGetValue(name, out var result);
+            if (!dictionary.TryGetValue(name, out var result))
+            {
+                throw new EnumerationNotFoundException($@"No {typeof(TEnum).Name} with name ""{name}"" found.");
+            }
 
             return result;
         }
