@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 using Primitives.RichillCapital.Extensions.Primitives;
 
@@ -81,19 +80,13 @@ public abstract class Enumeration<TEnum, TValue> :
 
     public static TEnum FromName(string name, bool ignoreCase = false)
     {
+        // FIXME: Ensure.NotEmptyOrWhiteSpace(name);
         if (string.IsNullOrWhiteSpace(name))
         {
             throw new ArgumentException($"Argument cannot be null or empty.", nameof(name));
         }
 
-        if (ignoreCase)
-        {
-            return FindByName(_fromNameIgnoreCase.Value);
-        }
-        else
-        {
-            return FindByName(_fromName.Value);
-        }
+        return ignoreCase ? FindByName(_fromNameIgnoreCase.Value) : FindByName(_fromName.Value);
 
         TEnum FindByName(Dictionary<string, TEnum> dictionary)
         {
@@ -104,6 +97,22 @@ public abstract class Enumeration<TEnum, TValue> :
 
             return result;
         }
+    }
+
+    public static bool TryFromName(string name, out TEnum? enumeration)
+        => TryFromName(name, false, out enumeration);
+
+    public static bool TryFromName(string name, bool ignoreCase, out TEnum? enumeration)
+    {
+        if (string.IsNullOrEmpty(name))
+        {
+            enumeration = default;
+            return false;
+        }
+
+        return ignoreCase ?
+            _fromNameIgnoreCase.Value.TryGetValue(name, out enumeration) :
+            _fromName.Value.TryGetValue(name, out enumeration);
     }
 
     public static TEnum FromValue(TValue value)
