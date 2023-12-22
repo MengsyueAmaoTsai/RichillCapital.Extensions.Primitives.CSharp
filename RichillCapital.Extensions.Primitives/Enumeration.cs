@@ -134,9 +134,15 @@ public abstract class Enumeration<TEnum, TValue> :
         return result;
     }
 
-    public static bool TryFromValue(TValue value, out TEnum enumeration)
+    public static bool TryFromValue(TValue value, out TEnum? enumeration)
     {
-        throw new NotImplementedException();
+        if (value is null)
+        {
+            enumeration = default;
+            return false;
+        }
+
+        return _fromValue.Value.TryGetValue(value, out enumeration);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
