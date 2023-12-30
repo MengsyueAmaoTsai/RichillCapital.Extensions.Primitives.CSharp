@@ -1,6 +1,4 @@
-using RichillCapital.Extensions.Primitives.Results;
-
-namespace RichillCapital.Extensions.Primitives.UnitTests.Results;
+namespace RichillCapital.Extensions.Primitives.UnitTests;
 
 [TestClass]
 public sealed class ResultWithoutValueTests

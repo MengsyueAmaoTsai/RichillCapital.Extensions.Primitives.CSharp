@@ -1,4 +1,4 @@
-namespace RichillCapital.Extensions.Primitives.Results;
+namespace RichillCapital.Extensions.Primitives;
 
 public class Error
 {
