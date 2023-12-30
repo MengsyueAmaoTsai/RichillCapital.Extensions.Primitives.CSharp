@@ -21,7 +21,10 @@ public abstract class Enumeration<TEnum, TValue> :
     where TEnum : Enumeration<TEnum, TValue>
     where TValue : IEquatable<TValue>, IComparable<TValue>
 {
-    public static IReadOnlyCollection<TEnum> Members => _fromName.Value.Values.ToList().AsReadOnly();
+    public static IReadOnlyCollection<TEnum> Members =>
+        _fromName.Value.Values
+            .ToList()
+            .AsReadOnly();
 
     private static readonly Lazy<TEnum[]> _enumOptions =
         new(GetAllOptions, LazyThreadSafetyMode.ExecutionAndPublication);
@@ -30,7 +33,9 @@ public abstract class Enumeration<TEnum, TValue> :
         new(() => _enumOptions.Value.ToDictionary(item => item.Name));
 
     private static readonly Lazy<Dictionary<string, TEnum>> _fromNameIgnoreCase =
-        new(() => _enumOptions.Value.ToDictionary(item => item.Name, StringComparer.OrdinalIgnoreCase));
+        new(() => _enumOptions.Value.ToDictionary(
+            item => item.Name,
+            StringComparer.OrdinalIgnoreCase));
 
     private static readonly Lazy<Dictionary<TValue, TEnum>> _fromValue =
         new(() =>
@@ -79,8 +84,8 @@ public abstract class Enumeration<TEnum, TValue> :
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool TryFromName(string name, out TEnum? enumeration)
-        => TryFromName(name, false, out enumeration);
+    public static bool TryFromName(string name, out TEnum? enumeration) =>
+        TryFromName(name, false, out enumeration);
 
     public static bool TryFromName(string name, bool ignoreCase, out TEnum? enumeration)
     {
@@ -146,55 +151,47 @@ public abstract class Enumeration<TEnum, TValue> :
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public int CompareTo(Enumeration<TEnum, TValue>? other)
-        => other is null ? 0 : Value.CompareTo(other.Value);
+    public int CompareTo(Enumeration<TEnum, TValue>? other) =>
+        other is null ? 0 : Value.CompareTo(other.Value);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static implicit operator TValue(Enumeration<TEnum, TValue> enumeration)
-        => enumeration is not null ? enumeration.Value : default!;
+    public static implicit operator TValue(Enumeration<TEnum, TValue> enumeration) =>
+        enumeration is not null ? enumeration.Value : default!;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static explicit operator Enumeration<TEnum, TValue>(TValue value) => FromValue(value);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator <(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
-        => left.CompareTo(right) < 0;
+    public static bool operator <(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right) =>
+        left.CompareTo(right) < 0;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator <=(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
-        => left.CompareTo(right) <= 0;
+    public static bool operator <=(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right) =>
+        left.CompareTo(right) <= 0;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator >(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
-        => left.CompareTo(right) > 0;
+    public static bool operator >(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right) =>
+        left.CompareTo(right) > 0;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator >=(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
-        => left.CompareTo(right) >= 0;
+    public static bool operator >=(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right) =>
+        left.CompareTo(right) >= 0;
 
-    public static bool operator ==(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
-        => left is null ? right is null : left.Equals(right);
+    public static bool operator ==(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right) =>
+        left is null ? right is null : left.Equals(right);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator !=(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
-        => !(left == right);
+    public static bool operator !=(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right) =>
+        !(left == right);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override int GetHashCode() => Value.GetHashCode();
 
-    public override bool Equals(object? obj) => (obj is Enumeration<TEnum, TValue> other) && Equals(other);
+    public override bool Equals(object? obj) =>
+        (obj is Enumeration<TEnum, TValue> other) && Equals(other);
 
-    public bool Equals(Enumeration<TEnum, TValue>? other)
-        => other is not null && (ReferenceEquals(this, other) || Value.Equals(other.Value));
-
-    public EnumerationThen<TEnum, TValue> Match(Enumeration<TEnum, TValue> enumeration)
-        => new(enumeration: this, isMatched: Equals(enumeration), stopEvaluating: false);
-
-    public EnumerationThen<TEnum, TValue> Match(params Enumeration<TEnum, TValue>[] enumerations) =>
-             new(enumeration: this, isMatched: enumerations.Contains(this), stopEvaluating: false);
-
-    public EnumerationThen<TEnum, TValue> Match(IEnumerable<Enumeration<TEnum, TValue>> enumerations) =>
-        new(enumeration: this, isMatched: enumerations.Contains(this), stopEvaluating: false);
+    public bool Equals(Enumeration<TEnum, TValue>? other) =>
+        other is not null && (ReferenceEquals(this, other) || Value.Equals(other.Value));
 
     public override string ToString() => Name;
 
@@ -213,10 +210,6 @@ public abstract class Enumeration<TEnum, TValue> :
             .ToArray();
     }
 
-    private static IEqualityComparer<TValue>? GetValueComparer()
-    {
-        var comparer = typeof(TEnum).GetCustomAttribute<EnumerationComparerAttribute<TValue>>();
-
-        return comparer?.Comparer;
-    }
+    private static IEqualityComparer<TValue>? GetValueComparer() =>
+        typeof(TEnum).GetCustomAttribute<EnumerationComparerAttribute<TValue>>()?.Comparer;
 }
