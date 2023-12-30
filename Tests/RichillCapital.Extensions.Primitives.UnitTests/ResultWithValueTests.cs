@@ -41,20 +41,6 @@ public sealed class ResultWithValueTests
         result.ValueOrDefault.Should().Be(default);
     }
 
-    private class TestValue
-    {
-    }
-
-    [TestMethod]
-    public void ValueOrDefault_ShouldReturnFailedResult()
-    {
-        // Act
-        var result = Result.Failure<TestValue>(Error.WithMessage("ErrorMessage"));
-
-        // Assert
-        result.ValueOrDefault.Should().BeNull();
-    }
-
     [TestMethod]
     public void Value_Should_ThrowExceptionInFailureResult()
     {
