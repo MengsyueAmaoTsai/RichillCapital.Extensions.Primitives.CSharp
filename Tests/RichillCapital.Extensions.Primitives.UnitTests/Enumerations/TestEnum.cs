@@ -1,4 +1,4 @@
-namespace RichillCapital.Extensions.Primitives.UnitTests;
+namespace RichillCapital.Extensions.Primitives.UnitTests.Enumerations;
 
 public sealed class TestEnumeration : Enumeration<TestEnumeration>
 {

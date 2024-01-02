@@ -1,8 +1,6 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-using Primitives.RichillCapital.Extensions.Primitives;
-
 namespace RichillCapital.Extensions.Primitives;
 
 public abstract class Enumeration<TEnum> : Enumeration<TEnum, int>

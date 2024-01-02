@@ -1,4 +1,4 @@
-namespace RichillCapital.Extensions.Primitives.UnitTests;
+namespace RichillCapital.Extensions.Primitives.UnitTests.Enumerations;
 
 [TestClass]
 public sealed class EnumerationExplicitConversionTests

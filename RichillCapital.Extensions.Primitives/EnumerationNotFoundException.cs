@@ -1,4 +1,4 @@
-namespace Primitives.RichillCapital.Extensions.Primitives;
+namespace RichillCapital.Extensions.Primitives;
 
 public sealed class EnumerationNotFoundException : Exception
 {

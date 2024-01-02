@@ -1,8 +1,4 @@
-using FluentAssertions;
-
-using Primitives.RichillCapital.Extensions.Primitives;
-
-namespace RichillCapital.Extensions.Primitives.UnitTests;
+namespace RichillCapital.Extensions.Primitives.UnitTests.Enumerations;
 
 [TestClass]
 public sealed class EnumerationFromFromNameTests
