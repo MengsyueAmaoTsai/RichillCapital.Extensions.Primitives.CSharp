@@ -18,13 +18,12 @@ public sealed class ResultRailwayExtensionsTests
     [TestMethod]
     public void Ensure_Should_ReturnOriginalResult_WithTruePredicate()
     {
-        var successResult = Result.Success("ValidValue");
+        string expectedValue = "ValidValue";
+        var successResult = Result.Success(expectedValue);
 
         var result = successResult.Ensure(value => value.Length > 0, Error.WithMessage("Error"));
 
-        result.IsFailure.Should().BeFalse();
-        result.Value.Should().Be("ValidValue");
-        result.Error.Should().Be(Error.None);
+        result.ShouldBeValidSuccessResult(expectedValue);
     }
 
     [TestMethod]
@@ -36,8 +35,34 @@ public sealed class ResultRailwayExtensionsTests
 
         var result = successResult.Ensure(value => value.Length == 1, error);
 
-        result.IsFailure.Should().BeTrue();
-        result.Error.Should().Be(error);
-        result.Error.Message.Should().Be("Error");
+        result.ShouldBeValidFailureResult(error, "Error");
+    }
+
+    private sealed record Person(string Name);
+
+    [TestMethod]
+    public void Map_Should_ReturnResultWithDestinationValue_WhenResultIsSuccess()
+    {
+        var name = "John";
+        var result = Result.From(name);
+
+        var personResult = result.Map(name => new Person(name));
+        var person = personResult.Value;
+
+        personResult.ShouldBeValidSuccessResult(new Person(name));
+        person.Should().BeOfType<Person>();
+        person.Name.Should().Be(name);
+    }
+
+    [TestMethod]
+    public void Map_Should_ReturnFailureResultWithSameError_WithFailureResult()
+    {
+        var errorMessage = "Something went wrong.";
+        var error = new Error(errorMessage);
+        Result<string> failureResult = Result.Failure(error);
+
+        var personResult = failureResult.Map(name => new Person(name));
+
+        personResult.ShouldBeValidFailureResult(error, errorMessage);
     }
 }
