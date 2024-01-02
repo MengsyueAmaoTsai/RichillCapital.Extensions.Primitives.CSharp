@@ -1,15 +1,22 @@
-namespace RichillCapital.Extensions.Primitives.UnitTests;
+namespace RichillCapital.Extensions.Primitives;
 
 [TestClass]
 public sealed class ErrorTests
 {
     [TestMethod]
-    public void WithMessage_Should_CreateErrorWithEmptyString()
+    public void WithMessage_ShouldReturnErrorWithMessage()
     {
-        // Act
+        string message = "This is and error message.";
+        var error = Error.WithMessage(message);
+
+        error.Message.Should().Be(message);
+    }
+
+    [TestMethod]
+    public void WithMessage_Should_ReturnNoneWhenGivenEmptyMessage()
+    {
         var error = Error.WithMessage(string.Empty);
 
-        // Assert
-        error.Message.Should().BeEmpty();
+        error.Should().Be(Error.None);
     }
 }
