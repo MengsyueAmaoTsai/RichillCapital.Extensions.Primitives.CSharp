@@ -12,6 +12,8 @@ public sealed class Maybe<TValue>
         Value = value;
     }
 
+    public static Maybe<TValue> Null => new(default);
+
     public TValue Value { get; private init; }
 
     public bool HasValue => Value is not null;
