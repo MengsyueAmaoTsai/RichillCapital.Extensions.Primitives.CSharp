@@ -16,7 +16,7 @@ public sealed class ResultRailwayExtensionsTests
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().Be(84);
-        result.Error.Should().BeNull();
+        result.Error.Should().Be(Error.Default);
     }
 
     [TestMethod]

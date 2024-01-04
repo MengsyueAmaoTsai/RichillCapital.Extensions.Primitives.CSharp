@@ -12,7 +12,7 @@ public sealed class ResultTests
 
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().Be(42);
-        result.Error.Should().BeNull();
+        result.Error.Should().Be(Error.Default);
     }
 
     [TestMethod]
@@ -36,7 +36,7 @@ public sealed class ResultTests
 
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().Be("Test");
-        result.Error.Should().BeNull();
+        result.Error.Should().Be(Error.Default);
     }
 
     [TestMethod]
@@ -60,7 +60,7 @@ public sealed class ResultTests
 
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().BeTrue();
-        result.Error.Should().BeNull();
+        result.Error.Should().Be(Error.Default);
     }
 
     [TestMethod]
@@ -84,7 +84,7 @@ public sealed class ResultTests
 
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().Be(value);
-        result.Error.Should().BeNull();
+        result.Error.Should().Be(Error.Default);
     }
 
     [TestMethod]
@@ -112,7 +112,7 @@ public sealed class ResultTests
 
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().Be(value);
-        result.Error.Should().BeNull();
+        result.Error.Should().Be(Error.Default);
     }
 
     [TestMethod]
@@ -135,7 +135,7 @@ public sealed class ResultTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Error.Should().BeNull();
+        result.Error.Should().Be(Error.Default);
     }
 
     [TestMethod]
@@ -176,6 +176,6 @@ public sealed class ResultTests
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().Be(42);
-        result.Error.Should().BeNull();
+        result.Error.Should().Be(Error.Default);
     }
 }

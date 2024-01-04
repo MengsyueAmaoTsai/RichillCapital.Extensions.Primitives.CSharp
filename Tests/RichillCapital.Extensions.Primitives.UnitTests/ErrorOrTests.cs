@@ -12,7 +12,7 @@ public sealed class ErrorOrTests
 
         errorOr.HasError.Should().BeFalse();
         errorOr.Value.Should().Be(42);
-        errorOr.Error.Should().BeNull();
+        errorOr.Error.Should().Be(Error.Default);
     }
 
     [TestMethod]
@@ -36,7 +36,7 @@ public sealed class ErrorOrTests
 
         errorOr.HasError.Should().BeFalse();
         errorOr.Value.Should().Be("Test");
-        errorOr.Error.Should().BeNull();
+        errorOr.Error.Should().Be(Error.Default);
     }
 
     [TestMethod]
@@ -60,7 +60,7 @@ public sealed class ErrorOrTests
 
         errorOr.HasError.Should().BeFalse();
         errorOr.Value.Should().BeTrue();
-        errorOr.Error.Should().BeNull();
+        errorOr.Error.Should().Be(Error.Default);
     }
 
     [TestMethod]
@@ -84,7 +84,7 @@ public sealed class ErrorOrTests
 
         errorOr.HasError.Should().BeFalse();
         errorOr.Value.Should().Be(value);
-        errorOr.Error.Should().BeNull();
+        errorOr.Error.Should().Be(Error.Default);
     }
 
     [TestMethod]
@@ -123,6 +123,6 @@ public sealed class ErrorOrTests
         // Assert
         result.HasError.Should().BeFalse();
         result.Value.Should().Be(42);
-        result.Error.Should().BeNull();
+        result.Error.Should().Be(Error.Default);
     }
 }
