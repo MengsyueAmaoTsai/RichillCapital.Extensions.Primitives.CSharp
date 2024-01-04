@@ -19,7 +19,7 @@ public class Result
 
 public class Result<TValue>
 {
-    private Result(bool isSuccess, TValue value, Error error)
+    internal Result(bool isSuccess, TValue value, Error error)
     {
         IsSuccess = isSuccess;
         Value = value;
@@ -35,4 +35,8 @@ public class Result<TValue>
     public static Result<TValue> Success(TValue value) => new(true, value, Error.Default);
 
     public static Result<TValue> Failure(Error error) => new(false, default, error);
+
+    public static implicit operator Result<TValue>(Error error) => Failure(error);
+
+    public static implicit operator Result<TValue>(TValue value) => Success(value);
 }
