@@ -1,8 +1,8 @@
-namespace RichillCapital.Extensions.Primitives;
+﻿namespace RichillCapital.Extensions.Primitives;
 
-public record class Error(string Message)
+public class Error
 {
-    public static readonly Error None = new(string.Empty);
-
-    public static Error WithMessage(string message) => string.IsNullOrEmpty(message) ? None : new(message);
+    public Error(string errorMessage)
+    {
+    }
 }
