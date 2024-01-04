@@ -18,6 +18,8 @@ public sealed class Maybe<TValue>
 
     public bool HasValue => Value is not null;
 
+    public bool HasNoValue => Value is null;
+
     public static implicit operator Maybe<TValue>(TValue value) => new(value);
 
     public static implicit operator TValue(Maybe<TValue> maybe) => maybe.Value;
