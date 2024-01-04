@@ -2,14 +2,10 @@ namespace RichillCapital.Extensions.Primitives;
 
 public sealed class ErrorOr<TValue>
 {
-    private ErrorOr(TValue value)
+    private ErrorOr(bool hasValue, TValue value, Error error)
     {
+        HasValue = hasValue;
         Value = value;
-        HasValue = true;
-    }
-
-    private ErrorOr(Error error)
-    {
         Error = error;
     }
 
@@ -21,11 +17,11 @@ public sealed class ErrorOr<TValue>
 
     public static ErrorOr<TValue> WithValue(TValue value)
     {
-        return new(value);
+        return new(true, value, Error.Default);
     }
 
     public static ErrorOr<TValue> WithError(Error error)
     {
-        return new(error);
+        return new(false, default, error);
     }
 }

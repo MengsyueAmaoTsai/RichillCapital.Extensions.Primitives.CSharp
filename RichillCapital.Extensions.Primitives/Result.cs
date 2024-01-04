@@ -1,34 +1,21 @@
 namespace RichillCapital.Extensions.Primitives;
 
-public sealed class Result<TValue>
+public class Result<TValue>
 {
-    private Result(TValue value)
+    private Result(bool isSuccess, TValue value, Error error)
     {
-        IsSuccess = true;
+        IsSuccess = isSuccess;
         Value = value;
-        Error = default;
-    }
-
-    private Result(Error error)
-    {
-        IsSuccess = false;
-        Value = default;
         Error = error;
     }
 
-    public static Result<TValue> Success(TValue value)
-    {
-        return new(value);
-    }
+    public bool IsSuccess { get; }
 
-    public static Result<TValue> Failure(Error error)
-    {
-        return new(error);
-    }
+    public TValue Value { get; }
 
-    public bool IsSuccess { get; private init; }
+    public Error Error { get; }
 
-    public TValue Value { get; private init; }
+    public static Result<TValue> Success(TValue value) => new(true, value, Error.Default);
 
-    public Error Error { get; private init; }
+    public static Result<TValue> Failure(Error error) => new(false, default, error);
 }
