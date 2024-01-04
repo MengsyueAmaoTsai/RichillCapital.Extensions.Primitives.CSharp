@@ -4,6 +4,16 @@ namespace RichillCapital.Extensions.Primitives.UnitTests;
 public sealed class ResultTests
 {
     [TestMethod]
+    public void Failure_ReturnFailureResult_WithException()
+    {
+        var result = Result<int>.Failure(new Exception("Exception"));
+
+        result.IsSuccess.Should().BeFalse();
+        result.Error.Should().NotBeNull();
+        result.Error.Message.Should().Be("Exception");
+    }
+
+    [TestMethod]
     public void Success_Should_CreateSuccessResult_WithNumericVale()
     {
         var value = 42;

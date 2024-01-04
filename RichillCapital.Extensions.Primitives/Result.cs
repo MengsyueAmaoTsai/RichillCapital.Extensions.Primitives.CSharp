@@ -40,6 +40,9 @@ public class Result<TValue>
     public static Result<TValue> Failure(Error error) =>
         new(false, default, error);
 
+    public static Result<TValue> Failure(Exception exception) =>
+        new(false, default, Error.WithMessage(exception.Message));
+
     public static implicit operator Result<TValue>(Error error) => Failure(error);
 
     public static implicit operator Result<TValue>(TValue value) => Success(value);
