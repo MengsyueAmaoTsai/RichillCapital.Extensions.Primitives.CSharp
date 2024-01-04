@@ -6,5 +6,8 @@ public class Error
 
     public Error(string errorMessage)
     {
+        Message = Message;
     }
+
+    public string Message { get; private init; }
 }

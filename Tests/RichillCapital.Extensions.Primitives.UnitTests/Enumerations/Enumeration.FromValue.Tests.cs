@@ -31,6 +31,6 @@ public sealed class EnumerationFromValueTests
 
         var result = TestEnumeration.FromValue(value, defaultEnum);
 
-        result.Should().BeSameAs(defaultEnum);
+        result.Value.Should().BeSameAs(defaultEnum);
     }
 }

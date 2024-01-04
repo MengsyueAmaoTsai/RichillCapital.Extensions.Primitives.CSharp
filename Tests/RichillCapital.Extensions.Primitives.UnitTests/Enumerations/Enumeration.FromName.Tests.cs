@@ -10,7 +10,7 @@ public sealed class EnumerationFromFromNameTests
 
         var result = TestEnumeration.FromName(expected);
 
-        result.Name.Should().Be(expected);
+        result.Value.Name.Should().Be(expected);
     }
 
     [TestMethod]
@@ -20,7 +20,7 @@ public sealed class EnumerationFromFromNameTests
 
         var result = TestEnumeration.FromName(expected);
 
-        result.Name.Should().Be(expected);
+        result.Value.Name.Should().Be(expected);
     }
 
     [TestMethod]
@@ -29,41 +29,34 @@ public sealed class EnumerationFromFromNameTests
         var matchingString = "One";
         var result = TestEnumeration.FromName(matchingString);
 
-        result.Should().BeSameAs(TestEnumeration.One);
+        result.Value.Should().BeSameAs(TestEnumeration.One);
     }
 
     [TestMethod]
-    public void Should_ThrowException_WhenGivenEmptyString()
+    public void Should_ReturnFailureResult_WhenGivenEmptyString()
     {
-        var action = () => TestEnumeration.FromName(string.Empty);
+        var result = TestEnumeration.FromName(string.Empty);
 
-        action.Should()
-            .ThrowExactly<ArgumentException>()
-            .WithMessage($"Argument cannot be null or empty. (Parameter 'name')")
-            .Which.ParamName.Should().Be("name");
+        result.IsSuccess.Should().BeFalse();
+        result.Error.Should().NotBe(Error.Default);
     }
 
     [TestMethod]
-    public void Should_ThrowException_WhenGivenNull()
+    public void Should_ReturnFailureResult_WhenGivenNull()
     {
-        var action = () => TestEnumeration.FromName(null!);
-        var exceptionMessage = $"Argument cannot be null or empty. (Parameter 'name')";
+        var result = TestEnumeration.FromName(null!);
 
-        action.Should()
-            .ThrowExactly<ArgumentException>()
-            .WithMessage(exceptionMessage)
-            .Which.ParamName.Should().Be("name");
+        result.IsSuccess.Should().BeFalse();
+        result.Error.Should().NotBe(Error.Default);
     }
 
     [TestMethod]
-    public void Should_ThrowException_WhenGivenNonMatchingString()
+    public void Should_ReturnFailureResult_WhenGivenNonMatchingString()
     {
         var nonMatchingName = "nonMatchingName";
-        var action = () => TestEnumeration.FromName(nonMatchingName);
-        var exceptionMessage = $@"No {typeof(TestEnumeration).Name} with name ""{nonMatchingName}"" found.";
+        var result = TestEnumeration.FromName(nonMatchingName);
 
-        action.Should()
-            .ThrowExactly<EnumerationNotFoundException>()
-            .WithMessage(exceptionMessage);
+        result.IsSuccess.Should().BeFalse();
+        result.Error.Should().NotBe(Error.Default);
     }
 }

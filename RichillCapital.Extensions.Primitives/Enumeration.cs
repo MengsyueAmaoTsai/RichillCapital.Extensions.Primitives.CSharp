@@ -61,41 +61,38 @@ public abstract class Enumeration<TEnum, TValue> :
 
     public TValue Value { get; private init; }
 
-    public static TEnum FromName(string name, bool ignoreCase = false)
+    public static Result<TEnum> FromName(string name, bool ignoreCase = false)
     {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            throw new ArgumentException($"Argument cannot be null or empty.", nameof(name));
-        }
+        return string.IsNullOrWhiteSpace(name) ? new Error($"name cannot be null or empty.") :
+            ignoreCase ?
+                FindByName(_fromNameIgnoreCase.Value).ToResult() :
+                FindByName(_fromName.Value).ToResult();
 
-        return ignoreCase ? FindByName(_fromNameIgnoreCase.Value) : FindByName(_fromName.Value);
-
-        TEnum FindByName(Dictionary<string, TEnum> dictionary)
-        {
-            if (!dictionary.TryGetValue(name, out var result))
-            {
-                throw new EnumerationNotFoundException($@"No {typeof(TEnum).Name} with name ""{name}"" found.");
-            }
-
-            return result;
-        }
+        Maybe<TEnum> FindByName(Dictionary<string, TEnum> dictionary) =>
+            dictionary.TryGetValue(name, out var enumeration) ?
+                Maybe<TEnum>.WithValue(enumeration) :
+                Maybe<TEnum>.NoValue;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool TryFromName(string name, out TEnum? enumeration) =>
-        TryFromName(name, false, out enumeration);
+    public static Maybe<TEnum> TryFromName(string name) =>
+        TryFromName(name, false);
 
-    public static bool TryFromName(string name, bool ignoreCase, out TEnum? enumeration)
+    public static Maybe<TEnum> TryFromName(string name, bool ignoreCase)
     {
         if (string.IsNullOrEmpty(name))
         {
-            enumeration = default;
-            return false;
+            return Maybe<TEnum>.NoValue;
         }
 
-        return ignoreCase ?
-            _fromNameIgnoreCase.Value.TryGetValue(name, out enumeration) :
-            _fromName.Value.TryGetValue(name, out enumeration);
+        if (!_fromNameIgnoreCase.Value.TryGetValue(name, out var enumeration))
+        {
+            return Maybe<TEnum>.NoValue;
+        }
+        else
+        {
+            return Maybe<TEnum>.WithValue(enumeration);
+        }
     }
 
     public static TEnum FromValue(TValue value)
@@ -122,7 +119,7 @@ public abstract class Enumeration<TEnum, TValue> :
         return enumeration;
     }
 
-    public static TEnum FromValue(TValue value, TEnum defaultEnumeration)
+    public static Result<TEnum> FromValue(TValue value, TEnum defaultEnumeration)
     {
         if (value is null)
         {
@@ -157,7 +154,8 @@ public abstract class Enumeration<TEnum, TValue> :
         enumeration is not null ? enumeration.Value : default!;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static explicit operator Enumeration<TEnum, TValue>(TValue value) => FromValue(value);
+    public static explicit operator Enumeration<TEnum, TValue>(TValue value) =>
+        FromValue(value);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool operator <(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right) =>
