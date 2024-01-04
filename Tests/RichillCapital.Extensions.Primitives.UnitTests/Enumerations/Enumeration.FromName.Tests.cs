@@ -38,7 +38,7 @@ public sealed class EnumerationFromFromNameTests
         var result = TestEnumeration.FromName(string.Empty);
 
         result.IsSuccess.Should().BeFalse();
-        result.Error.Should().NotBe(Error.Default);
+        result.Error.Should().NotBe(Error.Null);
     }
 
     [TestMethod]
@@ -47,7 +47,7 @@ public sealed class EnumerationFromFromNameTests
         var result = TestEnumeration.FromName(null!);
 
         result.IsSuccess.Should().BeFalse();
-        result.Error.Should().NotBe(Error.Default);
+        result.Error.Should().NotBe(Error.Null);
     }
 
     [TestMethod]
@@ -57,6 +57,6 @@ public sealed class EnumerationFromFromNameTests
         var result = TestEnumeration.FromName(nonMatchingName);
 
         result.IsSuccess.Should().BeFalse();
-        result.Error.Should().NotBe(Error.Default);
+        result.Error.Should().NotBe(Error.Null);
     }
 }

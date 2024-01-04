@@ -268,7 +268,7 @@
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers.DocumentationRules">
     <Rule Id="SA1600" Action="None" />
     <Rule Id="SA1601" Action="None" />
-    <Rule Id="SA1602" Action="Warning" />
+    <Rule Id="SA1602" Action="None" />
     <Rule Id="SA1603" Action="None" />
     <Rule Id="SA1604" Action="Warning" />
     <Rule Id="SA1605" Action="Warning" />

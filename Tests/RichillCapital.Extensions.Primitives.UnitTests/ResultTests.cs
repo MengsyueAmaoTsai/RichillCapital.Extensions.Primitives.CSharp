@@ -12,13 +12,13 @@ public sealed class ResultTests
 
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().Be(42);
-        result.Error.Should().Be(Error.Default);
+        result.Error.Should().Be(Error.Null);
     }
 
     [TestMethod]
     public void Failure_Should_CreateFailureResult_WithIntError()
     {
-        var error = new Error("Error");
+        var error = Error.WithMessage("Error");
 
         var result = Result<int>.Failure(error);
 
@@ -36,13 +36,13 @@ public sealed class ResultTests
 
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().Be("Test");
-        result.Error.Should().Be(Error.Default);
+        result.Error.Should().Be(Error.Null);
     }
 
     [TestMethod]
     public void Failure_Should_CreateFailureResult_WithStringError()
     {
-        var error = new Error("Error");
+        var error = Error.WithMessage("Error");
 
         var result = Result<string>.Failure(error);
 
@@ -60,13 +60,13 @@ public sealed class ResultTests
 
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().BeTrue();
-        result.Error.Should().Be(Error.Default);
+        result.Error.Should().Be(Error.Null);
     }
 
     [TestMethod]
     public void Failure_Should_CreateFailureResult_WithBoolError()
     {
-        var error = new Error("Error");
+        var error = Error.WithMessage("Error");
 
         var result = Result<bool>.Failure(error);
 
@@ -84,13 +84,13 @@ public sealed class ResultTests
 
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().Be(value);
-        result.Error.Should().Be(Error.Default);
+        result.Error.Should().Be(Error.Null);
     }
 
     [TestMethod]
     public void Failure_Should_CreateFailureResult_WithDateTimeOffsetError()
     {
-        var error = new Error("Error");
+        var error = Error.WithMessage("Error");
 
         var result = Result<DateTimeOffset>.Failure(error);
 
@@ -112,13 +112,13 @@ public sealed class ResultTests
 
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().Be(value);
-        result.Error.Should().Be(Error.Default);
+        result.Error.Should().Be(Error.Null);
     }
 
     [TestMethod]
     public void Failure_Should_CreateFailureResult_WithTestClass()
     {
-        var error = new Error("Error");
+        var error = Error.WithMessage("Error");
 
         var result = Result<TestClass>.Failure(error);
 
@@ -135,14 +135,14 @@ public sealed class ResultTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Error.Should().Be(Error.Default);
+        result.Error.Should().Be(Error.Null);
     }
 
     [TestMethod]
     public void Failure_Should_CreateFailureResult_WithError()
     {
         // Arrange
-        var error = new Error("Error");
+        var error = Error.WithMessage("Error");
 
         // Act
         var result = Result.Failure(error);
@@ -156,7 +156,7 @@ public sealed class ResultTests
     public void ImplicitConversionFromError_Should_CreateFailureResult_WithError()
     {
         // Arrange
-        var error = new Error("Error");
+        var error = Error.WithMessage("Error");
 
         // Act
         Result<int> result = error;
@@ -176,6 +176,6 @@ public sealed class ResultTests
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().Be(42);
-        result.Error.Should().Be(Error.Default);
+        result.Error.Should().Be(Error.Null);
     }
 }

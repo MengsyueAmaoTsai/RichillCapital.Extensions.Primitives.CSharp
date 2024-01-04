@@ -25,7 +25,7 @@ public sealed class TryTests
     public void Failure_Should_CreateTry_WithErrorMessage()
     {
         // Arrange
-        var error = new Error("Operation failed");
+        var error = Error.WithMessage("Operation failed");
 
         // Act
         var result = Try<int>.Failure(error);

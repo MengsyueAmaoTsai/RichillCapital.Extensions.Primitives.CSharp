@@ -16,7 +16,7 @@ public sealed class ErrorOr<TValue>
     public Error Error { get; private init; }
 
     public static ErrorOr<TValue> WithValue(TValue value) =>
-        new(false, value, Error.Default);
+        new(false, value, Error.Null);
 
     public static ErrorOr<TValue> WithError(Error error) =>
         new(true, default, error);

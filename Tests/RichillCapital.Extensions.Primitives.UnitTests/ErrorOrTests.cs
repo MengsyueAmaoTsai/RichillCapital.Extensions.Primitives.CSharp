@@ -12,13 +12,13 @@ public sealed class ErrorOrTests
 
         errorOr.HasError.Should().BeFalse();
         errorOr.Value.Should().Be(42);
-        errorOr.Error.Should().Be(Error.Default);
+        errorOr.Error.Should().Be(Error.Null);
     }
 
     [TestMethod]
     public void WithError_Should_CreateErrorOr_WithIntError()
     {
-        var error = new Error("Error");
+        var error = Error.WithMessage("Error");
 
         var errorOr = ErrorOr<int>.WithError(error);
 
@@ -36,13 +36,13 @@ public sealed class ErrorOrTests
 
         errorOr.HasError.Should().BeFalse();
         errorOr.Value.Should().Be("Test");
-        errorOr.Error.Should().Be(Error.Default);
+        errorOr.Error.Should().Be(Error.Null);
     }
 
     [TestMethod]
     public void WithError_Should_CreateErrorOr_WithStringError()
     {
-        var error = new Error("Error");
+        var error = Error.WithMessage("Error");
 
         var errorOr = ErrorOr<string>.WithError(error);
 
@@ -60,13 +60,13 @@ public sealed class ErrorOrTests
 
         errorOr.HasError.Should().BeFalse();
         errorOr.Value.Should().BeTrue();
-        errorOr.Error.Should().Be(Error.Default);
+        errorOr.Error.Should().Be(Error.Null);
     }
 
     [TestMethod]
     public void WithError_Should_CreateErrorOr_WithBoolError()
     {
-        var error = new Error("Error");
+        var error = Error.WithMessage("Error");
 
         var errorOr = ErrorOr<bool>.WithError(error);
 
@@ -84,13 +84,13 @@ public sealed class ErrorOrTests
 
         errorOr.HasError.Should().BeFalse();
         errorOr.Value.Should().Be(value);
-        errorOr.Error.Should().Be(Error.Default);
+        errorOr.Error.Should().Be(Error.Null);
     }
 
     [TestMethod]
     public void WithError_Should_CreateErrorOr_WithDateTimeOffsetError()
     {
-        var error = new Error("Error");
+        var error = Error.WithMessage("Error");
 
         var errorOr = ErrorOr<DateTimeOffset>.WithError(error);
 
@@ -103,7 +103,7 @@ public sealed class ErrorOrTests
     public void ImplicitOperator_FromError_Should_CreateErrorOrWithErrorMessage()
     {
         // Arrange
-        var error = new Error("Some error message");
+        var error = Error.WithMessage("Some error message");
 
         // Act
         ErrorOr<int> result = error;
@@ -123,6 +123,6 @@ public sealed class ErrorOrTests
         // Assert
         result.HasError.Should().BeFalse();
         result.Value.Should().Be(42);
-        result.Error.Should().Be(Error.Default);
+        result.Error.Should().Be(Error.Null);
     }
 }

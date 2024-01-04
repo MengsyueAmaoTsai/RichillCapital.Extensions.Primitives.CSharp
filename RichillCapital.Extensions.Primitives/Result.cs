@@ -12,7 +12,7 @@ public class Result
 
     public Error Error { get; }
 
-    public static Result Success() => new(true, Error.Default);
+    public static Result Success() => new(true, Error.Null);
 
     public static Result Failure(Error error) => new(false, error);
 
@@ -35,7 +35,7 @@ public class Result<TValue>
     public Error Error { get; }
 
     public static Result<TValue> Success(TValue value) =>
-        new(true, value, Error.Default);
+        new(true, value, Error.Null);
 
     public static Result<TValue> Failure(Error error) =>
         new(false, default, error);

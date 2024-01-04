@@ -16,14 +16,14 @@ public sealed class ResultRailwayExtensionsTests
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().Be(84);
-        result.Error.Should().Be(Error.Default);
+        result.Error.Should().Be(Error.Null);
     }
 
     [TestMethod]
     public void Map_Should_ReturnOriginalError_When_ResultIsFailure()
     {
         // Arrange
-        var error = new Error("Some error");
+        var error = Error.WithMessage("Some error");
         var failureResult = Result<int>.Failure(error);
 
         // Act

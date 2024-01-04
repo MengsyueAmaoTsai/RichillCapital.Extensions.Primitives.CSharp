@@ -63,7 +63,7 @@ public abstract class Enumeration<TEnum, TValue> :
 
     public static Result<TEnum> FromName(string name, bool ignoreCase = false)
     {
-        return string.IsNullOrWhiteSpace(name) ? new Error($"name cannot be null or empty.") :
+        return string.IsNullOrWhiteSpace(name) ? Error.Invalid($"name cannot be null or empty.") :
             ignoreCase ?
                 FindByName(_fromNameIgnoreCase.Value).ToResult() :
                 FindByName(_fromName.Value).ToResult();
