@@ -10,7 +10,7 @@ public sealed class ErrorOrTests
 
         var errorOr = ErrorOr<int>.WithValue(value);
 
-        errorOr.HasValue.Should().BeTrue();
+        errorOr.HasError.Should().BeFalse();
         errorOr.Value.Should().Be(42);
         errorOr.Error.Should().BeNull();
     }
@@ -22,7 +22,7 @@ public sealed class ErrorOrTests
 
         var errorOr = ErrorOr<int>.WithError(error);
 
-        errorOr.HasValue.Should().BeFalse();
+        errorOr.HasError.Should().BeTrue();
         errorOr.Value.Should().Be(default);
         errorOr.Error.Should().Be(error);
     }
@@ -34,7 +34,7 @@ public sealed class ErrorOrTests
 
         var errorOr = ErrorOr<string>.WithValue(value);
 
-        errorOr.HasValue.Should().BeTrue();
+        errorOr.HasError.Should().BeFalse();
         errorOr.Value.Should().Be("Test");
         errorOr.Error.Should().BeNull();
     }
@@ -46,7 +46,7 @@ public sealed class ErrorOrTests
 
         var errorOr = ErrorOr<string>.WithError(error);
 
-        errorOr.HasValue.Should().BeFalse();
+        errorOr.HasError.Should().BeTrue();
         errorOr.Value.Should().Be(default);
         errorOr.Error.Should().Be(error);
     }
@@ -58,7 +58,7 @@ public sealed class ErrorOrTests
 
         var errorOr = ErrorOr<bool>.WithValue(value);
 
-        errorOr.HasValue.Should().BeTrue();
+        errorOr.HasError.Should().BeFalse();
         errorOr.Value.Should().BeTrue();
         errorOr.Error.Should().BeNull();
     }
@@ -70,7 +70,7 @@ public sealed class ErrorOrTests
 
         var errorOr = ErrorOr<bool>.WithError(error);
 
-        errorOr.HasValue.Should().BeFalse();
+        errorOr.HasError.Should().BeTrue();
         errorOr.Value.Should().Be(default);
         errorOr.Error.Should().Be(error);
     }
@@ -82,7 +82,7 @@ public sealed class ErrorOrTests
 
         var errorOr = ErrorOr<DateTimeOffset>.WithValue(value);
 
-        errorOr.HasValue.Should().BeTrue();
+        errorOr.HasError.Should().BeFalse();
         errorOr.Value.Should().Be(value);
         errorOr.Error.Should().BeNull();
     }
@@ -94,8 +94,35 @@ public sealed class ErrorOrTests
 
         var errorOr = ErrorOr<DateTimeOffset>.WithError(error);
 
-        errorOr.HasValue.Should().BeFalse();
+        errorOr.HasError.Should().BeTrue();
         errorOr.Value.Should().Be(default);
         errorOr.Error.Should().Be(error);
+    }
+
+    [TestMethod]
+    public void ImplicitOperator_FromError_Should_CreateErrorOrWithErrorMessage()
+    {
+        // Arrange
+        var error = new Error("Some error message");
+
+        // Act
+        ErrorOr<int> result = error;
+
+        // Assert
+        result.HasError.Should().BeTrue();
+        result.Error.Should().Be(error);
+        result.Value.Should().Be(default);
+    }
+
+    [TestMethod]
+    public void ImplicitOperator_FromErrorOr_Should_ExtractValueFromErrorOr()
+    {
+        // Arrange & Act
+        ErrorOr<int> result = 42;
+
+        // Assert
+        result.HasError.Should().BeFalse();
+        result.Value.Should().Be(42);
+        result.Error.Should().BeNull();
     }
 }

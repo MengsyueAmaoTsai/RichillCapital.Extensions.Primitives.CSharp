@@ -32,9 +32,11 @@ public class Result<TValue>
 
     public Error Error { get; }
 
-    public static Result<TValue> Success(TValue value) => new(true, value, Error.Default);
+    public static Result<TValue> Success(TValue value) =>
+        new(true, value, Error.Default);
 
-    public static Result<TValue> Failure(Error error) => new(false, default, error);
+    public static Result<TValue> Failure(Error error) =>
+        new(false, default, error);
 
     public static implicit operator Result<TValue>(Error error) => Failure(error);
 

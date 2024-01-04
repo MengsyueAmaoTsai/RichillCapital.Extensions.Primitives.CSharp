@@ -39,7 +39,6 @@ public sealed class ResultTests
         result.Error.Should().BeNull();
     }
 
-
     [TestMethod]
     public void Failure_Should_CreateFailureResult_WithStringError()
     {
@@ -63,7 +62,6 @@ public sealed class ResultTests
         result.Value.Should().BeTrue();
         result.Error.Should().BeNull();
     }
-
 
     [TestMethod]
     public void Failure_Should_CreateFailureResult_WithBoolError()
