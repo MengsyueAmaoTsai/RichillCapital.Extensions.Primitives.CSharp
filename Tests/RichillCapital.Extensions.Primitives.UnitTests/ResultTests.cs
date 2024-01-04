@@ -128,4 +128,29 @@ public sealed class ResultTests
         result.Value.Should().Be(default);
         result.Error.Should().Be(error);
     }
+
+    [TestMethod]
+    public void Success_Should_CreateSuccessResult_WithNoError()
+    {
+        // Arrange & Act
+        var result = Result.Success();
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Error.Should().BeNull();
+    }
+
+    [TestMethod]
+    public void Failure_Should_CreateFailureResult_WithError()
+    {
+        // Arrange
+        var error = new Error("Error");
+
+        // Act
+        var result = Result.Failure(error);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Error.Should().Be(error);
+    }
 }
