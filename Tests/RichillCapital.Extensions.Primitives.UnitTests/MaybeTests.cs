@@ -10,7 +10,7 @@ public sealed class MaybeTests
         var value = 42;
 
         // Act
-        var maybe = Maybe<int>.Some(value);
+        var maybe = Maybe<int>.WithValue(value);
 
         // Assert
         maybe.HasValue.Should().BeTrue();
@@ -21,7 +21,7 @@ public sealed class MaybeTests
     public void None_Should_CreateEmptyMaybe()
     {
         // Act
-        var maybe = Maybe<int>.None();
+        var maybe = Maybe<int>.NoValue;
 
         // Assert
         maybe.HasValue.Should().BeFalse();

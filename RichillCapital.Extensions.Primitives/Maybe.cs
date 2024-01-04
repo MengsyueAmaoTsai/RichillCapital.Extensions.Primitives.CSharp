@@ -2,6 +2,8 @@ namespace RichillCapital.Extensions.Primitives;
 
 public struct Maybe<TValue>
 {
+    public static readonly Maybe<TValue> NoValue = new();
+
     private readonly TValue _value;
 
     private Maybe(TValue value)
@@ -12,11 +14,9 @@ public struct Maybe<TValue>
 
     public bool HasValue { get; private init; }
 
-    public TValue Value => HasValue ?
+    public readonly TValue Value => HasValue ?
         _value :
         throw new InvalidOperationException("The Maybe<T> instance has no value.");
 
-    public static Maybe<TValue> Some(TValue value) => new(value);
-
-    public static Maybe<TValue> None() => new();
+    public static Maybe<TValue> WithValue(TValue value) => new(value);
 }
