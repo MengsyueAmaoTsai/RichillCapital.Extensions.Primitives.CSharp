@@ -35,5 +35,17 @@ public sealed class ErrorTests
         var error2 = Error.NotFound(message);
 
         error1.Should().Be(error2);
+        error1.Equals(error2).Should().BeTrue();
+    }
+
+    [TestMethod]
+    public void Equals_Should_ReturnFalseWithSameMessageAndDifferenceErrorType()
+    {
+        var message = "Not found.";
+        var error1 = Error.NotFound(message);
+        var error2 = Error.Conflict(message);
+
+        error1.Should().NotBe(error2);
+        error1.Equals(error2).Should().BeFalse();
     }
 }
