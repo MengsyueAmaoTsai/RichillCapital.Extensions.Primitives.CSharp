@@ -1,5 +1,5 @@
 # RichillCapital.Extensions.Primitives
-[![.NET](https://github.com/MengsyueAmaoTsai/RichillCapital.Extensions.Primitives.CSharp/actions/workflows/dotnet.yml/badge.svg?branch=master)](https://github.com/MengsyueAmaoTsai/RichillCapital.Extensions.Primitives.CSharp/actions/workflows/dotnet.yml)
+[![Build & Tests](https://github.com/MengsyueAmaoTsai/RichillCapital.Extensions.Primitives.CSharp/actions/workflows/dotnet.yml/badge.svg)](https://github.com/MengsyueAmaoTsai/RichillCapital.Extensions.Primitives.CSharp/actions/workflows/dotnet.yml)
 ## Pack
 
 ```powershell
