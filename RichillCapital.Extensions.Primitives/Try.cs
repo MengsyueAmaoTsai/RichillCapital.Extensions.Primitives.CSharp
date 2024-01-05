@@ -8,7 +8,7 @@ public class Try<T>
     private Try(T value)
     {
         _value = value;
-        _error = null;
+        _error = default;
         IsSuccess = true;
     }
 

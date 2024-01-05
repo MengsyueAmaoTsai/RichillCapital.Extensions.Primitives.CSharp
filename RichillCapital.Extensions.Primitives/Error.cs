@@ -1,6 +1,6 @@
 ﻿namespace RichillCapital.Extensions.Primitives;
 
-public class Error
+public record Error
 {
     public static readonly Error Null = new(string.Empty, ErrorType.Null);
 

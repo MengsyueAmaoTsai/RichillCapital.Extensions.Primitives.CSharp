@@ -26,4 +26,14 @@ public sealed class ErrorTests
 
         error.Type.Should().Be(ErrorType.Unauthorized);
     }
+
+    [TestMethod]
+    public void Equals_Should_ReturnTrueWithSameError()
+    {
+        var message = "Not found.";
+        var error1 = Error.NotFound(message);
+        var error2 = Error.NotFound(message);
+
+        error1.Should().Be(error2);
+    }
 }
