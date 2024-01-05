@@ -22,6 +22,8 @@ public record Error
 
     public static Error Conflict(string message) => new(message, ErrorType.Conflict);
 
+    public static Error Forbidden(string message) => new(message, ErrorType.Forbidden);
+
     public static Error Unauthorized(string message) => new(message, ErrorType.Unauthorized);
 }
 
@@ -38,4 +40,6 @@ public enum ErrorType
     Conflict,
 
     Unauthorized,
+
+    Forbidden,
 }

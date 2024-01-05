@@ -48,6 +48,17 @@ public sealed class ErrorCreationTests
     }
 
     [TestMethod]
+    public void Invalid_Should_CreateForbiddenTypeError()
+    {
+        var message = "Forbidden.";
+        var error = Error.Forbidden(message);
+
+        error.Should().NotBeNull();
+        error.Message.Should().Be(message);
+        error.Type.Should().Be(ErrorType.Forbidden);
+    }
+
+    [TestMethod]
     public void Null_Should_CreateNullTypeError()
     {
         var error = Error.Null;
