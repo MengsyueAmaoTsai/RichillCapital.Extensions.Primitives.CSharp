@@ -65,8 +65,8 @@ public abstract class Enumeration<TEnum, TValue> :
     {
         return string.IsNullOrWhiteSpace(name) ? Error.Invalid($"name cannot be null or empty.") :
             ignoreCase ?
-                FindByName(_fromNameIgnoreCase.Value).ToResult() :
-                FindByName(_fromName.Value).ToResult();
+                FindByName(_fromNameIgnoreCase.Value).AsResult() :
+                FindByName(_fromName.Value).AsResult();
 
         Maybe<TEnum> FindByName(Dictionary<string, TEnum> dictionary) =>
             dictionary.TryGetValue(name, out var enumeration) ?
