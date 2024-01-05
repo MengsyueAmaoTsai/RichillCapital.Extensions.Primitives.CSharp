@@ -1,18 +1,8 @@
-namespace RichillCapital.Extensions.Primitives.UnitTests;
+namespace RichillCapital.Extensions.Primitives.UnitTests.Results;
 
 [TestClass]
-public sealed class ResultTests
+public sealed class ResultCreationTests
 {
-    [TestMethod]
-    public void Failure_ReturnFailureResult_WithException()
-    {
-        var result = Result<int>.Failure(new Exception("Exception"));
-
-        result.IsSuccess.Should().BeFalse();
-        result.Error.Should().NotBeNull();
-        result.Error.Message.Should().Be("Exception");
-    }
-
     [TestMethod]
     public void Success_Should_CreateSuccessResult_WithNumericVale()
     {
@@ -160,32 +150,5 @@ public sealed class ResultTests
         // Assert
         result.IsSuccess.Should().BeFalse();
         result.Error.Should().Be(error);
-    }
-
-    [TestMethod]
-    public void ImplicitConversionFromError_Should_CreateFailureResult_WithError()
-    {
-        // Arrange
-        var error = Error.WithMessage("Error");
-
-        // Act
-        Result<int> result = error;
-
-        // Assert
-        result.IsSuccess.Should().BeFalse();
-        result.Value.Should().Be(default);
-        result.Error.Should().Be(error);
-    }
-
-    [TestMethod]
-    public void ImplicitConversionFromValue_Should_CreateSuccessResult_WithValue()
-    {
-        // Arrange & Act
-        Result<int> result = 42;
-
-        // Assert
-        result.IsSuccess.Should().BeTrue();
-        result.Value.Should().Be(42);
-        result.Error.Should().Be(Error.Null);
     }
 }
