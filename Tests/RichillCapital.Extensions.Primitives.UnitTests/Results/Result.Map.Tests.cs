@@ -1,7 +1,7 @@
 namespace RichillCapital.Extensions.Primitives.UnitTests.Results;
 
 [TestClass]
-public sealed class ResultRailwayExtensionsTests
+public sealed class ResultMapTests
 {
     [TestMethod]
     public void Map_Should_ReturnMappedResult_When_ResultIsSuccess()
