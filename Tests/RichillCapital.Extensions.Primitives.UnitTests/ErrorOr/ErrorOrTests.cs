@@ -1,4 +1,4 @@
-namespace RichillCapital.Extensions.Primitives.UnitTests;
+namespace RichillCapital.Extensions.Primitives.UnitTests.ErrorOr;
 
 [TestClass]
 public sealed class ErrorOrTests
