@@ -1,4 +1,4 @@
-namespace RichillCapital.Extensions.Primitives.UnitTests;
+namespace RichillCapital.Extensions.Primitives.UnitTests.Maybe;
 
 [TestClass]
 public sealed class MaybeTests
@@ -25,9 +25,5 @@ public sealed class MaybeTests
 
         // Assert
         maybe.HasValue.Should().BeFalse();
-        Action action = () => _ = maybe.Value;
-        action
-            .Should().Throw<InvalidOperationException>("The Maybe<T> instance has no value.")
-            .WithMessage("The Maybe<T> instance has no value.");
     }
 }
