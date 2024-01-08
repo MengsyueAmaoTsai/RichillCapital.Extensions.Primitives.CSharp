@@ -6,21 +6,21 @@ public sealed class EnumerationFromValueTests
     [TestMethod]
     public void ReturnsEnumGivenMatchingValue()
     {
-        var result = TestEnumeration.FromValue(0);
+        // Act
+        var maybe = TestEnumeration.FromValue(0);
 
-        result.Should().BeSameAs(TestEnumeration.One);
+        // Assert
+        maybe.Value.Should().BeSameAs(TestEnumeration.One);
     }
 
     [TestMethod]
-    public void Should_ThrowsException_GivenNonMatchingValue()
+    public void When_NonMatchingValue_Should_ReturnNoValue()
     {
         var nonMatchingValue = -1;
-        string errorMessage = $"No {typeof(TestEnumeration).Name} with Value {nonMatchingValue} found.";
-        var action = () => TestEnumeration.FromValue(nonMatchingValue);
+        var maybe = TestEnumeration.FromValue(nonMatchingValue);
 
-        action.Should()
-            .ThrowExactly<EnumerationNotFoundException>()
-            .WithMessage(errorMessage);
+        // Assert
+        maybe.HasValue.Should().BeFalse();
     }
 
     [TestMethod]

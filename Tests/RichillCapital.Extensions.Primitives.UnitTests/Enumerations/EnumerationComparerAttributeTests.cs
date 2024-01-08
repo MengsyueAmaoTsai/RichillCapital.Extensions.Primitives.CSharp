@@ -41,56 +41,54 @@ public class EnumerationComparerAttributeTests
     [TestMethod]
     public void Should_ThrowsException_VanillaStringEnum_FromValue_WhenStringDoesNotMatchCase()
     {
-        var action = () =>
-        {
-            var actual = VanillaStringEnum.FromValue("ONE");
-        };
+        // Act
+        var maybe = VanillaStringEnum.FromValue("ONE");
 
-        action.Should()
-            .ThrowExactly<EnumerationNotFoundException>();
+        // Assert
+        maybe.HasValue.Should().BeFalse();
     }
 
     [TestMethod]
     public void ReturnsItem_CaseInsensitiveEnum_FromValue_WhenStringDoesNotMatchCase()
     {
-        var actual = CaseInsensitiveEnum.FromValue("ONE");
+        // Act
+        var maybe = CaseInsensitiveEnum.FromValue("ONE");
 
-        actual.Should().Be(CaseInsensitiveEnum.One);
+        // Assert
+        maybe.Value.Should().Be(CaseInsensitiveEnum.One);
     }
 
     [TestMethod]
     public void Should_ThrowsException_CaseSensitiveEnum_FromValue_WhenStringDoesNotMatchCase()
     {
-        var action = () =>
-        {
-            var actual = CaseSensitiveEnum.FromValue("ONE");
-        };
+        // Act
+        var maybe = CaseSensitiveEnum.FromValue("ONE");
 
-        action.Should()
-            .ThrowExactly<EnumerationNotFoundException>();
+        // Assert
+        maybe.HasValue.Should().BeFalse();
     }
 
     [TestMethod]
     public void Should_ReturnsItem_VanillaStringEnum_FromValue_WhenStringMatchesCase()
     {
-        var actual = VanillaStringEnum.FromValue("one");
+        var maybe = VanillaStringEnum.FromValue("one");
 
-        actual.Should().Be(VanillaStringEnum.One);
+        maybe.Value.Should().Be(VanillaStringEnum.One);
     }
 
     [TestMethod]
     public void Should_ReturnsItem_CaseInsensitiveEnum_FromValue_WhenStringMatchesCase()
     {
-        var actual = CaseInsensitiveEnum.FromValue("one");
+        var maybe = CaseInsensitiveEnum.FromValue("one");
 
-        actual.Should().Be(CaseInsensitiveEnum.One);
+        maybe.Value.Should().Be(CaseInsensitiveEnum.One);
     }
 
     [TestMethod]
     public void Should_ReturnsItem_CaseSensitiveEnum_FromValue_WhenStringMatchesCase()
     {
-        var actual = CaseSensitiveEnum.FromValue("one");
+        var maybe = CaseSensitiveEnum.FromValue("one");
 
-        actual.Should().Be(CaseSensitiveEnum.One);
+        maybe.Value.Should().Be(CaseSensitiveEnum.One);
     }
 }
